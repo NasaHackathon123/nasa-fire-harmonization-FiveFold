@@ -780,10 +780,26 @@ EMBERWATCH_HTML = """
 components.html(EMBERWATCH_HTML, height=950, scrolling=True)
 
 st.markdown("---")
-st.markdown("### 🔥 EmberWatch System Status")
+st.markdown("### EmberWatch System Status")
 col1, col2, col3 = st.columns(3)
 col1.metric("Satellite Sources", "5", "Active")
 col2.metric("Data Processing", "Online", "Operational")
 col3.metric("Monitoring Region", "Southeast Asia")
 st.caption("Developed for NASA Space Apps Challenge 2026.")
 st.caption("Data reference: NASA FIRMS | MODIS | VIIRS")
+
+def calculate_quality_score(report):
+
+    total = report["raw"]
+
+    if total == 0:
+        return 0
+
+    invalid_rate = report["invalid"] / total
+    duplicate_rate = report["duplicates"] / total
+
+    score = 100 * (
+        1 - invalid_rate - duplicate_rate
+    )
+
+    return round(max(0, score), 2)
