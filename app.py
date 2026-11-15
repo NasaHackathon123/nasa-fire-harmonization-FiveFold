@@ -626,8 +626,8 @@ EMBERWATCH_HTML = """
             if (leafletMap) return;
             const rMeta = REGION_META[currentRegion];
             leafletMap = L.map('leaflet-map').setView(rMeta.center, rMeta.zoom);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                attribution: '© OpenStreetMap contributors © CARTO',
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
                 maxZoom: 18
             }).addTo(leafletMap);
 
