@@ -2,9 +2,13 @@ import streamlit as st
 import streamlit.components.v1 as components
 import os
 
-# Force Streamlit secrets directly into environment variables before anything else loads
+# Comprehensive environment injection for all possible backend variable names
 try:
-    os.environ["FIRMS_MAP_KEY"] = st.secrets["FIRMS_MAP_KEY"]
+    key_val = st.secrets["FIRMS_MAP_KEY"]
+    os.environ["FIRMS_MAP_KEY"] = key_val
+    os.environ["NASA_FIRMS_KEY"] = key_val
+    os.environ["FIRMS_API_KEY"] = key_val
+    os.environ["MAP_KEY"] = key_val
     os.environ["EMBERWATCH_MODE"] = st.secrets.get("EMBERWATCH_MODE", "live")
 except Exception:
     pass
