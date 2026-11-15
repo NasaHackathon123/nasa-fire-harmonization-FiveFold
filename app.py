@@ -53,12 +53,25 @@ def _read_json(path: Path, default):
 
 @st.cache_data(ttl=300, show_spinner="Loading harmonised observatory data...")
 def load_observatory_payload():
-  """Load pre-generated backend exports; auto-bootstrap demo exports if missing."""
+  """Load pre-generated backend exports; auto-bootstrap demo or live data."""
   cfg = load_settings(dotenv_path=ROOT_DIR / ".env")
   export_dir = cfg.export_dir
 
-  # Bootstrap synthetic demo exports if no pipeline run has occurred yet
-  if not (export_dir / "audit.json").exists():
+  audit_path = export_dir / "audit.json"
+  audit_data = _read_json(audit_path, {})
+  is_synthetic_export = audit_data.get("meta", {}).get("is_synthetic", True)
+  
+  target_mode = os.environ.get("EMBERWATCH_MODE", "synthetic")
+  has_key = bool(os.environ.get("FIRMS_MAP_KEY"))
+
+  # Force live fetch & harmonize if live mode is active and current data is synthetic
+  if target_mode == "live" and has_key and is_synthetic_export:
+    try:
+      emberwatch_cli(["fetch"])
+      emberwatch_cli(["harmonize"])
+    except Exception as e:
+      print(f"Live FIRMS fetch error: {e}")
+  elif not audit_path.exists():
     emberwatch_cli(["fetch"])
     emberwatch_cli(["harmonize"])
   elif not (export_dir / "overview_sea.json").exists():
@@ -765,7 +778,6 @@ EMBERWATCH_HTML = """
 
             document.getElementById('calendar-title').innerText = `January – December ${year} Burning Heatmap`;
 
-            // Find max value for relative color scaling across covered days in the selected year
             let maxVal = 0;
             Object.entries(daysMap).forEach(([dstr, info]) => {
                 if (dstr.startsWith(year) && info.data_covered) {
