@@ -1,16 +1,16 @@
-import json
-import os
-from pathlib import Path
-import sys
 import streamlit as st
-import streamlit.components.v1 as components
+import os
 
+# Force Streamlit secrets directly into environment variables before anything else loads
 try:
-    for key, value in st.secrets.items():
-        if isinstance(value, str):
-            os.environ[key] = value
+    os.environ["FIRMS_MAP_KEY"] = st.secrets["FIRMS_MAP_KEY"]
+    os.environ["EMBERWATCH_MODE"] = st.secrets.get("EMBERWATCH_MODE", "live")
 except Exception:
     pass
+
+import json
+from pathlib import Path
+import sys
 
 # Ensure src/ is importable so `emberwatch` works without `pip install -e .`
 ROOT_DIR = Path(__file__).resolve().parent
