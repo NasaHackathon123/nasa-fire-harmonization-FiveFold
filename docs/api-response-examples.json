@@ -1,0 +1,190 @@
+[
+  {
+    "request": "GET /api/health",
+    "status": 200,
+    "response": {
+      "status": "ok",
+      "data_ready": true,
+      "processing_version": "1.0.0"
+    }
+  },
+  {
+    "request": "GET /api/regions",
+    "status": 200,
+    "response": [
+      {
+        "id": "central-kalimantan",
+        "name": "Central Kalimantan study box",
+        "bbox": [
+          112.0,
+          -3.0,
+          114.0,
+          -1.0
+        ]
+      },
+      {
+        "id": "central-kalimantan-west",
+        "name": "Western study subregion",
+        "bbox": [
+          112.0,
+          -3.0,
+          113.0,
+          -1.0
+        ]
+      }
+    ]
+  },
+  {
+    "request": "GET /api/methodology",
+    "status": 200,
+    "response": {
+      "processing_version": "1.0.0",
+      "method": "sensor-separated-utm49s-1km-v1",
+      "grid": {
+        "crs": "EPSG:32749",
+        "cell_size_m": 1000,
+        "origin": "UTM false origin",
+        "id": "32749:floor(easting/1000):floor(northing/1000)",
+        "boundary": "Cells are half-open [west,east),[south,north); regional bbox includes edge points.",
+        "domain": "Initial Kalimantan study boxes only; new regions require projection review."
+      },
+      "metrics": {
+        "detections": "Individual satellite observation rows, not wildfire incidents",
+        "occupied_cells": "Distinct cells across the selected month or boundary-month interval",
+        "daily_cell_sum": "Sum of distinct daily cells; a recurring cell contributes once each day",
+        "frp": "Pixel-integrated fire radiative power in MW; not burned area"
+      },
+      "confidence": {
+        "all": "All accepted native confidence values",
+        "nominal": "MODIS >=30; VIIRS n or h",
+        "strict": "MODIS >=80; VIIRS h",
+        "warning": "Policies are not equivalent probabilities across instruments"
+      },
+      "harmonization": {
+        "enabled": false,
+        "status": "Common grid, separate sources and versions only",
+        "calibration": "Nonnegative linear candidate, held-out latest year; never automatically validated; spatial and temporal stability review required"
+      },
+      "baseline": {
+        "formula": "(observed - historical median) / historical median * 100",
+        "minimum_prior_years": 3,
+        "reference": "Previous complete same-calendar months, identical source, collection, region, metric and confidence policy",
+        "zero_baseline": "Percentage is null; absolute difference remains available",
+        "coverage": "Operator-declared file completeness, no rejected rows; cloud/overpass exposure not available"
+      },
+      "limitations": [
+        "Five-day samples do not establish a full monthly total or historical baseline",
+        "Missing months are null, not zero",
+        "Imported complete days do not imply complete clear-sky observations",
+        "Grid occupancy does not estimate burned area",
+        "No forecasting; no validated sensor equivalence",
+        "All thermal anomaly types retained, including potential nonvegetation sources"
+      ],
+      "sources": [
+        "https://firms.modaps.eosdis.nasa.gov/api/area/",
+        "https://firms.modaps.eosdis.nasa.gov/content/descriptions/FIRMS_MODIS_Firehotspots.html",
+        "https://firms.modaps.eosdis.nasa.gov/content/descriptions/FIRMS_VIIRS_Firehotspots.html"
+      ]
+    }
+  },
+  {
+    "request": "GET /api/calendar?sensor=MODIS&start=2023-09-01&end=2023-09-05",
+    "status": 200,
+    "response": {
+      "metadata": {
+        "region": "central-kalimantan",
+        "start": "2023-09-01",
+        "end": "2023-09-05",
+        "sensor": "MODIS",
+        "source": null,
+        "confidence": "all",
+        "metric": "occupied_cells",
+        "method": "sensor-separated-utm49s-1km-v1",
+        "processing_version": "1.0.0",
+        "attribution": "NASA FIRMS MODIS Collection 6.1 / VIIRS standard-processing observations",
+        "warnings": [
+          "Hotspot observations are not verified individual wildfire incidents.",
+          "No detection does not establish absence of fire; cloud and overpass coverage are not measured.",
+          "Import completeness describes supplied files, not clear-sky observation opportunity.",
+          "Raw sensor counts and native confidence filters are not scientifically equivalent."
+        ]
+      },
+      "records": [
+        {
+          "month": "2023-09",
+          "source": "MODIS_SP",
+          "sensor": "MODIS",
+          "version": "61.03",
+          "detections": 183,
+          "occupied_cells": 131,
+          "daily_cell_sum": 156,
+          "value": 131,
+          "coverage_status": "complete",
+          "imported_days": 5,
+          "selected_days": 5,
+          "baseline": null,
+          "absolute_difference": null,
+          "percentage_difference": null,
+          "anomaly_status": "incomplete_month",
+          "reference_years": []
+        }
+      ]
+    }
+  },
+  {
+    "request": "GET /api/hotspots?start=2023-09-01&end=2023-09-05&limit=1",
+    "status": 200,
+    "response": {
+      "metadata": {
+        "region": "central-kalimantan",
+        "start": "2023-09-01",
+        "end": "2023-09-05",
+        "sensor": "all",
+        "source": null,
+        "confidence": "all",
+        "metric": "occupied_cells",
+        "method": "sensor-separated-utm49s-1km-v1",
+        "processing_version": "1.0.0",
+        "attribution": "NASA FIRMS MODIS Collection 6.1 / VIIRS standard-processing observations",
+        "warnings": [
+          "Hotspot observations are not verified individual wildfire incidents.",
+          "No detection does not establish absence of fire; cloud and overpass coverage are not measured.",
+          "Import completeness describes supplied files, not clear-sky observation opportunity.",
+          "Raw sensor counts and native confidence filters are not scientifically equivalent."
+        ]
+      },
+      "records": [
+        {
+          "latitude": -2.8659,
+          "longitude": 112.9054,
+          "timestamp_utc": "2023-09-01 10:55:00+08",
+          "sensor": "MODIS",
+          "source_dataset": "MODIS_SP",
+          "satellite": "Terra",
+          "instrument": "MODIS",
+          "version": "61.03",
+          "confidence_native": "22",
+          "confidence_type": "native_numeric_0_100",
+          "frp": 22.0,
+          "daynight": "D",
+          "scan": 2.4,
+          "track": 1.5,
+          "cell_id": "32749:711:9683",
+          "raw_source_id": "61cec6fb6e60fa508fdfe8ee0de42201f07b244eff0adbd7fac75b7037fb88a8",
+          "quality_flags": ""
+        }
+      ],
+      "total": 989,
+      "limit": 1,
+      "offset": 0,
+      "truncated": true
+    }
+  },
+  {
+    "request": "GET /api/explorer/view?dataset=invalid",
+    "status": 404,
+    "response": {
+      "detail": "Unknown dataset"
+    }
+  }
+]

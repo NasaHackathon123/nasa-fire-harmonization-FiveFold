@@ -1,0 +1,153 @@
+{
+  "status": "offline ingestion proof passed; upstream source completeness unverified",
+  "day": "2026-11-08",
+  "input_origin": "Existing local explorer worldwide cache; not independently redownloaded NASA or Portolan files",
+  "source_downloaded_at": "2026-11-14T09:25:51.537242+00:00",
+  "inputs": [
+    {
+      "source": "MODIS_NRT",
+      "filtered_unique_rows": 2460,
+      "csv_bytes": 4559881,
+      "sha256": "406045a3e8730118fdbeba51a5471648e2ed1de044617f3d9d55ccbb904dc292"
+    },
+    {
+      "source": "VIIRS_NOAA20_NRT",
+      "filtered_unique_rows": 15448,
+      "csv_bytes": 24057315,
+      "sha256": "8c4f70b5b8decdef50aa6f79fc3aa85a90d1c28483abbd7ebfa63ffd0e02e6f5"
+    },
+    {
+      "source": "VIIRS_NOAA21_NRT",
+      "filtered_unique_rows": 16136,
+      "csv_bytes": 22555782,
+      "sha256": "39f808ba9c087cd334a65e6a36a1de9f952cd6ce2eda3ff8c621374acfd5e52c"
+    }
+  ],
+  "regions": {
+    "western-north-america": [
+      -125,
+      30,
+      -110,
+      50
+    ],
+    "amazon": [
+      -65,
+      -15,
+      -55,
+      -5
+    ],
+    "southern-africa": [
+      20,
+      -25,
+      35,
+      -10
+    ],
+    "europe": [
+      0,
+      45,
+      30,
+      60
+    ],
+    "australia": [
+      115,
+      -35,
+      145,
+      -15
+    ],
+    "boreal-asia": [
+      90,
+      55,
+      120,
+      70
+    ]
+  },
+  "region_counts": {
+    "western-north-america": 272,
+    "amazon": 338,
+    "southern-africa": 9018,
+    "europe": 99,
+    "australia": 24267,
+    "boreal-asia": 50
+  },
+  "scanned_rows": 610807,
+  "selected_day_rows": 131462,
+  "selected_rows": 34044,
+  "rejected_day_rows": 0,
+  "exact_duplicates_removed": 0,
+  "partition_files": 27,
+  "parquet_bytes": 2563505,
+  "input_bytes": 51172978,
+  "ingestion_seconds": 5.436841700000514,
+  "repeat_seconds": 0.09120530000018334,
+  "raw_baseline_query_seconds": 0.893446999999469,
+  "aggregate_first_seconds": 0.0181204999998954,
+  "aggregate_warm_median_seconds": 0.01596465000011449,
+  "aggregate_warm_samples_seconds": [
+    0.016050999999606574,
+    0.015491299999666808,
+    0.015650800000003073,
+    0.015989300000001094,
+    0.017101000000366184,
+    0.015940000000227883
+  ],
+  "peak_working_set_bytes": 191799296,
+  "hardware": {
+    "os": "Windows",
+    "cpu_logical_count": 12,
+    "python": "3.12.10",
+    "duckdb": "2.0.0"
+  },
+  "assertions": {
+    "native_row_multiset_equal": true,
+    "repeat_identical_manifest": true,
+    "unique_ids_equal_count": true,
+    "all_output_within_requested_day_boxes": true,
+    "original_input_checksums_verified": true
+  },
+  "coverage_status": "unknown",
+  "limits": {
+    "batch_rows": 5000,
+    "max_file_bytes": 67108864,
+    "max_scanned_rows": 1000000,
+    "max_output_rows": 100000
+  },
+  "source_groups": [
+    {
+      "source": "MODIS_NRT",
+      "sensor": "MODIS",
+      "version": "6.1NRT",
+      "stream": "near-real-time",
+      "rows": 2460,
+      "frp_sum_mw": 178748.39,
+      "min_lat": -34.98097,
+      "max_lat": 60.45162
+    },
+    {
+      "source": "VIIRS_NOAA20_NRT",
+      "sensor": "VIIRS",
+      "version": "2.0NRT",
+      "stream": "near-real-time",
+      "rows": 15448,
+      "frp_sum_mw": 206144.38000000102,
+      "min_lat": -34.97987,
+      "max_lat": 60.44365
+    },
+    {
+      "source": "VIIRS_NOAA21_NRT",
+      "sensor": "VIIRS",
+      "version": "2.0NRT",
+      "stream": "near-real-time",
+      "rows": 16136,
+      "frp_sum_mw": 261506.61000000028,
+      "min_lat": -34.98037,
+      "max_lat": 60.44804
+    }
+  ],
+  "limitations": [
+    "Only one NRT day, not representative historical SP/seasonal workload",
+    "Local source provenance asserted by cache metadata; not independent NASA/mirror completeness validation",
+    "No archive network/download/HTTP range or object storage benchmark",
+    "Peak memory includes original-source baseline query, imported libraries, allocator and warm query runs",
+    "Global equal-area metrics, country geometry, polar/dateline selections and production APIs not implemented"
+  ]
+}

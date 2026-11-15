@@ -1,0 +1,818 @@
+{
+  "manifest_id": "PHASE2-2026-11-15-v1",
+  "schema_version": 1,
+  "approval_status": "pending_explicit_user_approval",
+  "external_requests_made_in_preparation": 0,
+  "objective": "Bounded official NASA SP/recent validation and optional mirror transport parity; not global archive ingestion",
+  "prepared_from": "Local Phase1 reports and cached availability checked_at2026-11-14; no fresh external confirmation",
+  "fixed_dates_policy": "Dates are fixed. No sliding now/recent window. If stale/unavailable when approved, skip and report; new dates require a revised manifest and approval.",
+  "nasa_metadata_requests": [
+    {
+      "id": "NASA-META-01",
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/data_availability/csv/{FIRMS_MAP_KEY}/all",
+      "purpose": "Fresh source/date bounds before any observation request",
+      "hard_response_cap_bytes": 262144
+    },
+    {
+      "id": "NASA-META-02",
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/mapserver/mapkey_status/?MAP_KEY={FIRMS_MAP_KEY}",
+      "purpose": "Transaction headroom before acquisition; credential-bearing URL never logged",
+      "hard_response_cap_bytes": 262144
+    },
+    {
+      "id": "NASA-META-03",
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/mapserver/mapkey_status/?MAP_KEY={FIRMS_MAP_KEY}",
+      "purpose": "Transaction accounting after issued NASA observation requests",
+      "hard_response_cap_bytes": 262144
+    }
+  ],
+  "nasa_observation_requests": [
+    {
+      "id": "NASA-01",
+      "source": "MODIS_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        -65,
+        -15,
+        -55,
+        -5
+      ],
+      "geography": "amazon",
+      "purpose": "Matched science-quality cross-platform/native-field parity",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/MODIS_SP/-65,-15,-55,-5/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "MODIS 6.1",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-02",
+      "source": "MODIS_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        20,
+        -25,
+        35,
+        -10
+      ],
+      "geography": "southern-africa",
+      "purpose": "Matched science-quality cross-platform/native-field parity",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/MODIS_SP/20,-25,35,-10/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "MODIS 6.1",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-03",
+      "source": "VIIRS_SNPP_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        -65,
+        -15,
+        -55,
+        -5
+      ],
+      "geography": "amazon",
+      "purpose": "Matched science-quality cross-platform/native-field parity",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_SNPP_SP/-65,-15,-55,-5/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-04",
+      "source": "VIIRS_SNPP_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        20,
+        -25,
+        35,
+        -10
+      ],
+      "geography": "southern-africa",
+      "purpose": "Matched science-quality cross-platform/native-field parity",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_SNPP_SP/20,-25,35,-10/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-05",
+      "source": "VIIRS_NOAA20_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        -65,
+        -15,
+        -55,
+        -5
+      ],
+      "geography": "amazon",
+      "purpose": "Matched science-quality cross-platform/native-field parity",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA20_SP/-65,-15,-55,-5/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-06",
+      "source": "VIIRS_NOAA20_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        20,
+        -25,
+        35,
+        -10
+      ],
+      "geography": "southern-africa",
+      "purpose": "Matched science-quality cross-platform/native-field parity",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA20_SP/20,-25,35,-10/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-07",
+      "source": "VIIRS_NOAA21_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        -65,
+        -15,
+        -55,
+        -5
+      ],
+      "geography": "amazon",
+      "purpose": "Matched science-quality cross-platform/native-field parity",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA21_SP/-65,-15,-55,-5/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-08",
+      "source": "VIIRS_NOAA21_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        20,
+        -25,
+        35,
+        -10
+      ],
+      "geography": "southern-africa",
+      "purpose": "Matched science-quality cross-platform/native-field parity",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA21_SP/20,-25,35,-10/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-09",
+      "source": "VIIRS_NOAA21_SP",
+      "day": "2023-03-15",
+      "day_range": 1,
+      "bbox": [
+        -65,
+        -15,
+        -55,
+        -5
+      ],
+      "geography": "amazon",
+      "purpose": "Earlier NOAA-21 history discrepancy: authoritative SP vs mirror; not an assumed complete interval",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA21_SP/-65,-15,-55,-5/1/2023-03-15",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-10",
+      "source": "MODIS_NRT",
+      "day": "2026-11-13",
+      "day_range": 1,
+      "bbox": [
+        115,
+        -35,
+        145,
+        -15
+      ],
+      "geography": "australia",
+      "purpose": "Fixed recent historical snapshot, platform/stream identity and mirror freshness comparison",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/MODIS_NRT/115,-35,145,-15/1/2026-11-13",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "recent; classify actual NRT/RT/URT from native version",
+      "expected_collection_family": "MODIS 6.1",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-11",
+      "source": "MODIS_NRT",
+      "day": "2026-11-13",
+      "day_range": 1,
+      "bbox": [
+        -125,
+        30,
+        -110,
+        50
+      ],
+      "geography": "western-north-america",
+      "purpose": "Fixed recent historical snapshot, platform/stream identity and mirror freshness comparison",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/MODIS_NRT/-125,30,-110,50/1/2026-11-13",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "recent; classify actual NRT/RT/URT from native version",
+      "expected_collection_family": "MODIS 6.1",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-12",
+      "source": "VIIRS_NOAA20_NRT",
+      "day": "2026-11-13",
+      "day_range": 1,
+      "bbox": [
+        115,
+        -35,
+        145,
+        -15
+      ],
+      "geography": "australia",
+      "purpose": "Fixed recent historical snapshot, platform/stream identity and mirror freshness comparison",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA20_NRT/115,-35,145,-15/1/2026-11-13",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "recent; classify actual NRT/RT/URT from native version",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-13",
+      "source": "VIIRS_NOAA20_NRT",
+      "day": "2026-11-13",
+      "day_range": 1,
+      "bbox": [
+        -125,
+        30,
+        -110,
+        50
+      ],
+      "geography": "western-north-america",
+      "purpose": "Fixed recent historical snapshot, platform/stream identity and mirror freshness comparison",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA20_NRT/-125,30,-110,50/1/2026-11-13",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "recent; classify actual NRT/RT/URT from native version",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-14",
+      "source": "VIIRS_NOAA21_NRT",
+      "day": "2026-11-13",
+      "day_range": 1,
+      "bbox": [
+        115,
+        -35,
+        145,
+        -15
+      ],
+      "geography": "australia",
+      "purpose": "Fixed recent historical snapshot, platform/stream identity and mirror freshness comparison",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA21_NRT/115,-35,145,-15/1/2026-11-13",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "recent; classify actual NRT/RT/URT from native version",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-15",
+      "source": "VIIRS_NOAA21_NRT",
+      "day": "2026-11-13",
+      "day_range": 1,
+      "bbox": [
+        -125,
+        30,
+        -110,
+        50
+      ],
+      "geography": "western-north-america",
+      "purpose": "Fixed recent historical snapshot, platform/stream identity and mirror freshness comparison",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA21_NRT/-125,30,-110,50/1/2026-11-13",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "recent; classify actual NRT/RT/URT from native version",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-16",
+      "source": "MODIS_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        90,
+        55,
+        120,
+        70
+      ],
+      "geography": "boreal-asia",
+      "purpose": "High-latitude native-coordinate and timestamp validation",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/MODIS_SP/90,55,120,70/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "MODIS 6.1",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-17",
+      "source": "VIIRS_SNPP_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        90,
+        55,
+        120,
+        70
+      ],
+      "geography": "boreal-asia",
+      "purpose": "High-latitude native-coordinate and timestamp validation",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_SNPP_SP/90,55,120,70/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-18",
+      "source": "MODIS_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        170,
+        50,
+        180,
+        70
+      ],
+      "geography": "dateline-east",
+      "purpose": "Logical [170,50,-170,70] selection split into supported non-crossing NASA boxes; union by exact native identity",
+      "selection_group": "dateline-SP-MODIS",
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/MODIS_SP/170,50,180,70/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "MODIS 6.1",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-19",
+      "source": "MODIS_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        -180,
+        50,
+        -170,
+        70
+      ],
+      "geography": "dateline-west",
+      "purpose": "Logical [170,50,-170,70] selection split into supported non-crossing NASA boxes; union by exact native identity",
+      "selection_group": "dateline-SP-MODIS",
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/MODIS_SP/-180,50,-170,70/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "MODIS 6.1",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-20",
+      "source": "VIIRS_NOAA21_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        170,
+        50,
+        180,
+        70
+      ],
+      "geography": "dateline-east",
+      "purpose": "Logical [170,50,-170,70] selection split into supported non-crossing NASA boxes; union by exact native identity",
+      "selection_group": "dateline-SP-NOAA21",
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA21_SP/170,50,180,70/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-21",
+      "source": "VIIRS_NOAA21_SP",
+      "day": "2023-09-01",
+      "day_range": 1,
+      "bbox": [
+        -180,
+        50,
+        -170,
+        70
+      ],
+      "geography": "dateline-west",
+      "purpose": "Logical [170,50,-170,70] selection split into supported non-crossing NASA boxes; union by exact native identity",
+      "selection_group": "dateline-SP-NOAA21",
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA21_SP/-180,50,-170,70/1/2023-09-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-22",
+      "source": "VIIRS_NOAA20_NRT",
+      "day": "2026-11-13",
+      "day_range": 1,
+      "bbox": [
+        170,
+        50,
+        180,
+        70
+      ],
+      "geography": "dateline-east",
+      "purpose": "Logical [170,50,-170,70] selection split into supported non-crossing NASA boxes; union by exact native identity",
+      "selection_group": "dateline-NRT-NOAA20",
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA20_NRT/170,50,180,70/1/2026-11-13",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "recent; classify actual NRT/RT/URT from native version",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-23",
+      "source": "VIIRS_NOAA20_NRT",
+      "day": "2026-11-13",
+      "day_range": 1,
+      "bbox": [
+        -180,
+        50,
+        -170,
+        70
+      ],
+      "geography": "dateline-west",
+      "purpose": "Logical [170,50,-170,70] selection split into supported non-crossing NASA boxes; union by exact native identity",
+      "selection_group": "dateline-NRT-NOAA20",
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_NOAA20_NRT/-180,50,-170,70/1/2026-11-13",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "recent; classify actual NRT/RT/URT from native version",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    },
+    {
+      "id": "NASA-24",
+      "source": "VIIRS_SNPP_SP",
+      "day": "2022-08-01",
+      "day_range": 1,
+      "bbox": [
+        20,
+        -25,
+        35,
+        -10
+      ],
+      "geography": "southern-africa",
+      "purpose": "Known outage-window negative control; no rows must not imply clear-sky zero fire",
+      "selection_group": null,
+      "method": "GET",
+      "url_template": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{FIRMS_MAP_KEY}/VIIRS_SNPP_SP/20,-25,35,-10/1/2022-08-01",
+      "credential_reference": "FIRMS_MAP_KEY (server-side only)",
+      "expected_stream_family": "standard",
+      "expected_collection_family": "VIIRS Collection 2; preserve and verify exact delivered version",
+      "estimated_response_bytes_range": [
+        1024,
+        524288
+      ],
+      "hard_response_cap_bytes": 2097152,
+      "availability_rule": "Issue only if fresh approved availability metadata includes the exact source/date; otherwise mark unavailable and skip; no substitute date/source.",
+      "execution_status": "not_requested"
+    }
+  ],
+  "mirror_metadata_requests": [
+    {
+      "id": "MIRROR-META-01",
+      "method": "GET",
+      "url": "https://data.source.coop/portolan-mirrors/firms-catalog/catalog.json",
+      "hard_response_cap_bytes": 262144
+    },
+    {
+      "id": "MIRROR-META-02",
+      "method": "GET",
+      "url": "https://data.source.coop/portolan-mirrors/firms-catalog/detections/collection.json",
+      "hard_response_cap_bytes": 262144
+    },
+    {
+      "id": "MIRROR-META-03",
+      "method": "GET",
+      "url": "https://data.source.coop/portolan-mirrors/firms-catalog/detections/README.md",
+      "hard_response_cap_bytes": 262144
+    }
+  ],
+  "mirror_objects": [
+    {
+      "id": "MIRROR-YEAR-2022",
+      "url": "https://data.source.coop/portolan-mirrors/firms-catalog/detections/year=2022/detections.parquet",
+      "allowed_methods": [
+        "HEAD",
+        "GET with explicit byte Range and If-Match where ETag available"
+      ],
+      "max_head_requests": 1,
+      "whole_object_download_allowed": false,
+      "years_allowed": [
+        2022
+      ]
+    },
+    {
+      "id": "MIRROR-YEAR-2023",
+      "url": "https://data.source.coop/portolan-mirrors/firms-catalog/detections/year=2023/detections.parquet",
+      "allowed_methods": [
+        "HEAD",
+        "GET with explicit byte Range and If-Match where ETag available"
+      ],
+      "max_head_requests": 1,
+      "whole_object_download_allowed": false,
+      "years_allowed": [
+        2023
+      ]
+    },
+    {
+      "id": "MIRROR-YEAR-2026",
+      "url": "https://data.source.coop/portolan-mirrors/firms-catalog/detections/year=2026/detections.parquet",
+      "allowed_methods": [
+        "HEAD",
+        "GET with explicit byte Range and If-Match where ETag available"
+      ],
+      "max_head_requests": 1,
+      "whole_object_download_allowed": false,
+      "years_allowed": [
+        2026
+      ]
+    }
+  ],
+  "mirror_range_policy": {
+    "max_total_get_range_requests": 32,
+    "max_response_bytes_per_range": 2097152,
+    "max_total_body_bytes": 67108864,
+    "allowed_ranges": "Explicit byte ranges within the three listed objects, determined from Parquet footer/row-group metadata; footer reads and failed/short reads count toward32.",
+    "http_requirements": "Require206 and valid Content-Range. Refuse200 full-object fallbacks. Pin all reads of an object to ETag/version; changed snapshot stops that object.",
+    "query_execution": "No unconstrained DuckDB remote URLs, automatic extension downloads or hidden HTTP. Read through a counted bounded range client only.",
+    "if_budget_insufficient": "Stop affected comparisons as unverified; no extra ranges/whole-year downloads or alternate mirror paths without revised approval."
+  },
+  "budgets": {
+    "nasa_observation_requests_max": 24,
+    "nasa_metadata_requests_max": 3,
+    "mirror_metadata_requests_max": 3,
+    "mirror_head_requests_max": 3,
+    "mirror_range_get_requests_max": 32,
+    "external_requests_max": 65,
+    "automatic_retries": 0,
+    "automatic_redirects": false,
+    "estimated_nasa_observation_body_bytes_range": [
+      262144,
+      8388608
+    ],
+    "estimated_mirror_range_body_bytes_range": [
+      8388608,
+      33554432
+    ],
+    "estimation_basis": "Planning estimates only; prior local NRT source density and bounded regional windows, not remote HEAD measurements.",
+    "max_all_external_body_bytes": 134217728,
+    "max_successful_nasa_observation_body_bytes": 50331648,
+    "max_metadata_body_bytes": 1572864,
+    "max_new_local_phase2_storage_bytes": 536870912,
+    "ingestion_batch_rows": 5000,
+    "max_scanned_rows": 1000000,
+    "max_output_rows": 100000,
+    "validation_duckdb_memory_limit": "256MiB",
+    "validation_duckdb_threads": 2,
+    "wall_clock_acquisition_limit_seconds": 1200
+  },
+  "credentials": {
+    "NASA": "Existing server-side FIRMS_MAP_KEY only, if present and valid. Values not recorded in manifest, logs, URLs presented to user, exceptions or report.",
+    "mirror": "Anonymous public HTTPS only; no AWS credentials, account registration or paid access. Stop if authorization required.",
+    "not_authorized": "No EXPLORER_ADMIN_TOKEN use, admin HTTP calls, new keys, Earthdata/LAADS/emailed archive requests or alternative transports."
+  },
+  "safety": {
+    "nasakey_logging": "Persist credential-free request identity (case ID/source/date/bbox), never final credential-bearing URL or raw requests exception.",
+    "no_substitutions": true,
+    "no_full_year_downloads": true,
+    "no_network_before_approval": true,
+    "no_handoff_or_backend_changes": true,
+    "new_data_root": "data/phase2_validation/PHASE2-2026-11-15-v1/<unique-run-id>; never overwrite prior outputs",
+    "originals": "Save successful NASA response bytes immutable with SHA-256, safe case metadata and acquisition/response timestamps; no in-place modification. Failed/truncated bodies are not complete originals.",
+    "http_backoff": "429/Retry-After or transient failure stops/defer the request; no unbudgeted retry. Inspect safe status only.",
+    "scope_change": "New source/date/bbox/URL/object, redirect, retry or budget increase requires a revised manifest and explicit approval."
+  },
+  "comparison_policy": {
+    "identity": "Compare per exact source/platform/collection/row-stream/UTC scope. SP and recent never silently merged.",
+    "fields": [
+      "latitude",
+      "longitude",
+      "UTC acquisition date/time",
+      "source/product",
+      "satellite/platform",
+      "instrument",
+      "native confidence and type",
+      "FRP including nulls",
+      "exact native version/collection",
+      "processing stream"
+    ],
+    "equality": "Native row-multiset equality where schema losslessly represents fields; explicit field normalization table and duplicate multiplicities. No rounded-neighbor matching.",
+    "precision": "Report exact values and absolute deltas; any serialization-only numeric tolerance must be documented, not used to mask version/stream/record differences.",
+    "missing_fields": "Mirror missing/lossy field ->not verifiable for that field, not fabricated or inferred agreement.",
+    "empty_windows": "A valid empty extract is an observation result, not proof of clear-sky exposure; both sides empty does not validate nonempty dateline records.",
+    "dateline": "Union the two halves with exact-record deduplication at+/-180, preserving original coordinates. Compare with equivalent split mirror predicates, not a naive west<lon<east wrap.",
+    "freshness": "Record source_checked_at, retrieval clocks, HTTP Last-Modified/ETag, actual acquisition range and mirror catalog watermark separately. Last-Modified is not proof of complete ingest."
+  }
+}

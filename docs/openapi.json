@@ -1,0 +1,2255 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Fire Activity Explorer",
+    "description": "Sensor-separated NASA hotspot analytics. Observations are not wildfire incidents.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/regions": {
+      "get": {
+        "summary": "Regions",
+        "operationId": "regions_api_regions_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Region"
+                  },
+                  "type": "array",
+                  "title": "Response Regions Api Regions Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/anomalies": {
+      "get": {
+        "summary": "Activity",
+        "operationId": "activity_api_anomalies_get",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "central-kalimantan",
+              "title": "Region"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-01-01",
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-12-31",
+              "title": "End"
+            }
+          },
+          {
+            "name": "sensor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "MODIS",
+                "VIIRS"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Sensor"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "MODIS_SP",
+                    "VIIRS_SNPP_SP",
+                    "VIIRS_NOAA20_SP",
+                    "VIIRS_NOAA21_SP"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source"
+            }
+          },
+          {
+            "name": "confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "nominal",
+                "strict"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Confidence"
+            }
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "common-grid",
+                "raw",
+                "harmonized"
+              ],
+              "type": "string",
+              "default": "common-grid",
+              "title": "Method"
+            }
+          },
+          {
+            "name": "metric",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "detections",
+                "occupied_cells",
+                "daily_cell_sum"
+              ],
+              "type": "string",
+              "default": "occupied_cells",
+              "title": "Metric"
+            }
+          },
+          {
+            "name": "min_frp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0,
+              "title": "Min Frp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trends": {
+      "get": {
+        "summary": "Activity",
+        "operationId": "activity_api_trends_get",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "central-kalimantan",
+              "title": "Region"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-01-01",
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-12-31",
+              "title": "End"
+            }
+          },
+          {
+            "name": "sensor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "MODIS",
+                "VIIRS"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Sensor"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "MODIS_SP",
+                    "VIIRS_SNPP_SP",
+                    "VIIRS_NOAA20_SP",
+                    "VIIRS_NOAA21_SP"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source"
+            }
+          },
+          {
+            "name": "confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "nominal",
+                "strict"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Confidence"
+            }
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "common-grid",
+                "raw",
+                "harmonized"
+              ],
+              "type": "string",
+              "default": "common-grid",
+              "title": "Method"
+            }
+          },
+          {
+            "name": "metric",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "detections",
+                "occupied_cells",
+                "daily_cell_sum"
+              ],
+              "type": "string",
+              "default": "occupied_cells",
+              "title": "Metric"
+            }
+          },
+          {
+            "name": "min_frp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0,
+              "title": "Min Frp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/calendar": {
+      "get": {
+        "summary": "Activity",
+        "operationId": "activity_api_calendar_get",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "central-kalimantan",
+              "title": "Region"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-01-01",
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-12-31",
+              "title": "End"
+            }
+          },
+          {
+            "name": "sensor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "MODIS",
+                "VIIRS"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Sensor"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "MODIS_SP",
+                    "VIIRS_SNPP_SP",
+                    "VIIRS_NOAA20_SP",
+                    "VIIRS_NOAA21_SP"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source"
+            }
+          },
+          {
+            "name": "confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "nominal",
+                "strict"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Confidence"
+            }
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "common-grid",
+                "raw",
+                "harmonized"
+              ],
+              "type": "string",
+              "default": "common-grid",
+              "title": "Method"
+            }
+          },
+          {
+            "name": "metric",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "detections",
+                "occupied_cells",
+                "daily_cell_sum"
+              ],
+              "type": "string",
+              "default": "occupied_cells",
+              "title": "Metric"
+            }
+          },
+          {
+            "name": "min_frp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0,
+              "title": "Min Frp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/hotspots": {
+      "get": {
+        "summary": "Hotspots",
+        "operationId": "hotspots_api_hotspots_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 5000,
+              "minimum": 1,
+              "default": 1000,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "bbox",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Bbox"
+            }
+          },
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "central-kalimantan",
+              "title": "Region"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-01-01",
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-12-31",
+              "title": "End"
+            }
+          },
+          {
+            "name": "sensor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "MODIS",
+                "VIIRS"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Sensor"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "MODIS_SP",
+                    "VIIRS_SNPP_SP",
+                    "VIIRS_NOAA20_SP",
+                    "VIIRS_NOAA21_SP"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source"
+            }
+          },
+          {
+            "name": "confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "nominal",
+                "strict"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Confidence"
+            }
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "common-grid",
+                "raw",
+                "harmonized"
+              ],
+              "type": "string",
+              "default": "common-grid",
+              "title": "Method"
+            }
+          },
+          {
+            "name": "metric",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "detections",
+                "occupied_cells",
+                "daily_cell_sum"
+              ],
+              "type": "string",
+              "default": "occupied_cells",
+              "title": "Metric"
+            }
+          },
+          {
+            "name": "min_frp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0,
+              "title": "Min Frp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HotspotResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/quality": {
+      "get": {
+        "summary": "Quality",
+        "operationId": "quality_api_quality_get",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "central-kalimantan",
+              "title": "Region"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-01-01",
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-12-31",
+              "title": "End"
+            }
+          },
+          {
+            "name": "sensor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "MODIS",
+                "VIIRS"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Sensor"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "MODIS_SP",
+                    "VIIRS_SNPP_SP",
+                    "VIIRS_NOAA20_SP",
+                    "VIIRS_NOAA21_SP"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source"
+            }
+          },
+          {
+            "name": "confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "nominal",
+                "strict"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Confidence"
+            }
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "common-grid",
+                "raw",
+                "harmonized"
+              ],
+              "type": "string",
+              "default": "common-grid",
+              "title": "Method"
+            }
+          },
+          {
+            "name": "metric",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "detections",
+                "occupied_cells",
+                "daily_cell_sum"
+              ],
+              "type": "string",
+              "default": "occupied_cells",
+              "title": "Metric"
+            }
+          },
+          {
+            "name": "min_frp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0,
+              "title": "Min Frp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QualityResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/comparison": {
+      "get": {
+        "summary": "Comparison",
+        "operationId": "comparison_api_comparison_get",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "central-kalimantan",
+              "title": "Region"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-01-01",
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-12-31",
+              "title": "End"
+            }
+          },
+          {
+            "name": "sensor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "MODIS",
+                "VIIRS"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Sensor"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "MODIS_SP",
+                    "VIIRS_SNPP_SP",
+                    "VIIRS_NOAA20_SP",
+                    "VIIRS_NOAA21_SP"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source"
+            }
+          },
+          {
+            "name": "confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "nominal",
+                "strict"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Confidence"
+            }
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "common-grid",
+                "raw",
+                "harmonized"
+              ],
+              "type": "string",
+              "default": "common-grid",
+              "title": "Method"
+            }
+          },
+          {
+            "name": "metric",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "detections",
+                "occupied_cells",
+                "daily_cell_sum"
+              ],
+              "type": "string",
+              "default": "occupied_cells",
+              "title": "Metric"
+            }
+          },
+          {
+            "name": "min_frp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0,
+              "title": "Min Frp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComparisonResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/methodology": {
+      "get": {
+        "summary": "Methodology",
+        "operationId": "methodology_api_methodology_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MethodologyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/export": {
+      "get": {
+        "summary": "Export",
+        "operationId": "export_api_export_get",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "central-kalimantan",
+              "title": "Region"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-01-01",
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2023-12-31",
+              "title": "End"
+            }
+          },
+          {
+            "name": "sensor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "MODIS",
+                "VIIRS"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Sensor"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "MODIS_SP",
+                    "VIIRS_SNPP_SP",
+                    "VIIRS_NOAA20_SP",
+                    "VIIRS_NOAA21_SP"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source"
+            }
+          },
+          {
+            "name": "confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "nominal",
+                "strict"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Confidence"
+            }
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "common-grid",
+                "raw",
+                "harmonized"
+              ],
+              "type": "string",
+              "default": "common-grid",
+              "title": "Method"
+            }
+          },
+          {
+            "name": "metric",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "detections",
+                "occupied_cells",
+                "daily_cell_sum"
+              ],
+              "type": "string",
+              "default": "occupied_cells",
+              "title": "Metric"
+            }
+          },
+          {
+            "name": "min_frp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0,
+              "title": "Min Frp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              },
+              "text/csv": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/explorer/availability": {
+      "get": {
+        "summary": "Availability",
+        "operationId": "availability_api_explorer_availability_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/explorer/availability/refresh": {
+      "post": {
+        "tags": [
+          "Administrator"
+        ],
+        "summary": "Refresh Availability",
+        "operationId": "refresh_availability_api_explorer_availability_refresh_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/explorer/cleanup": {
+      "post": {
+        "tags": [
+          "Administrator"
+        ],
+        "summary": "Cleanup",
+        "operationId": "cleanup_api_explorer_cleanup_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/explorer/load": {
+      "post": {
+        "tags": [
+          "Administrator"
+        ],
+        "summary": "Load",
+        "description": "Disabled by default. Server-side administrator operation only.",
+        "operationId": "load_api_explorer_load_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/explorer/cached": {
+      "get": {
+        "summary": "Cached",
+        "operationId": "cached_api_explorer_cached_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/explorer/view": {
+      "get": {
+        "summary": "View",
+        "operationId": "view_api_explorer_view_get",
+        "parameters": [
+          {
+            "name": "dataset",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 10000,
+              "minimum": 1,
+              "default": 10000,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "sensor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "MODIS",
+                "VIIRS"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Sensor"
+            }
+          },
+          {
+            "name": "confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "nominal",
+                "strict"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Confidence"
+            }
+          },
+          {
+            "name": "min_frp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0,
+              "title": "Min Frp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/explorer/export": {
+      "get": {
+        "summary": "Export",
+        "operationId": "export_api_explorer_export_get",
+        "parameters": [
+          {
+            "name": "dataset",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset"
+            }
+          },
+          {
+            "name": "sensor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "MODIS",
+                "VIIRS"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Sensor"
+            }
+          },
+          {
+            "name": "confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "nominal",
+                "strict"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Confidence"
+            }
+          },
+          {
+            "name": "min_frp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0,
+              "title": "Min Frp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Activity": {
+        "properties": {
+          "month": {
+            "type": "string",
+            "title": "Month"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "sensor": {
+            "type": "string",
+            "title": "Sensor"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "detections": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detections"
+          },
+          "occupied_cells": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Occupied Cells"
+          },
+          "daily_cell_sum": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Daily Cell Sum"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "coverage_status": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "partial",
+              "unknown",
+              "unavailable"
+            ],
+            "title": "Coverage Status"
+          },
+          "imported_days": {
+            "type": "integer",
+            "title": "Imported Days"
+          },
+          "selected_days": {
+            "type": "integer",
+            "title": "Selected Days"
+          },
+          "baseline": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline"
+          },
+          "absolute_difference": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Absolute Difference"
+          },
+          "percentage_difference": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percentage Difference"
+          },
+          "anomaly_status": {
+            "type": "string",
+            "title": "Anomaly Status",
+            "default": "insufficient_history"
+          },
+          "reference_years": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Reference Years"
+          }
+        },
+        "type": "object",
+        "required": [
+          "month",
+          "source",
+          "sensor",
+          "version",
+          "detections",
+          "occupied_cells",
+          "daily_cell_sum",
+          "value",
+          "coverage_status",
+          "imported_days",
+          "selected_days"
+        ],
+        "title": "Activity"
+      },
+      "CalendarResponse": {
+        "properties": {
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "records": {
+            "items": {
+              "$ref": "#/components/schemas/Activity"
+            },
+            "type": "array",
+            "title": "Records"
+          }
+        },
+        "type": "object",
+        "required": [
+          "metadata",
+          "records"
+        ],
+        "title": "CalendarResponse"
+      },
+      "ComparisonResponse": {
+        "properties": {
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "shared_daily_cells": {
+            "items": {
+              "$ref": "#/components/schemas/DailyOverlap"
+            },
+            "type": "array",
+            "title": "Shared Daily Cells"
+          },
+          "definition": {
+            "type": "string",
+            "title": "Definition"
+          }
+        },
+        "type": "object",
+        "required": [
+          "metadata",
+          "shared_daily_cells",
+          "definition"
+        ],
+        "title": "ComparisonResponse"
+      },
+      "DailyOverlap": {
+        "properties": {
+          "acq_date": {
+            "type": "string",
+            "title": "Acq Date"
+          },
+          "shared_daily_cells": {
+            "type": "integer",
+            "title": "Shared Daily Cells"
+          }
+        },
+        "type": "object",
+        "required": [
+          "acq_date",
+          "shared_daily_cells"
+        ],
+        "title": "DailyOverlap"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "data_ready": {
+            "type": "boolean",
+            "title": "Data Ready"
+          },
+          "processing_version": {
+            "type": "string",
+            "title": "Processing Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "data_ready",
+          "processing_version"
+        ],
+        "title": "HealthResponse"
+      },
+      "Hotspot": {
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "title": "Latitude"
+          },
+          "longitude": {
+            "type": "number",
+            "title": "Longitude"
+          },
+          "timestamp_utc": {
+            "type": "string",
+            "title": "Timestamp Utc"
+          },
+          "sensor": {
+            "type": "string",
+            "title": "Sensor"
+          },
+          "source_dataset": {
+            "type": "string",
+            "title": "Source Dataset"
+          },
+          "satellite": {
+            "type": "string",
+            "title": "Satellite"
+          },
+          "instrument": {
+            "type": "string",
+            "title": "Instrument"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "confidence_native": {
+            "type": "string",
+            "title": "Confidence Native"
+          },
+          "confidence_type": {
+            "type": "string",
+            "title": "Confidence Type"
+          },
+          "frp": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Frp"
+          },
+          "daynight": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Daynight"
+          },
+          "scan": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scan"
+          },
+          "track": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Track"
+          },
+          "cell_id": {
+            "type": "string",
+            "title": "Cell Id"
+          },
+          "raw_source_id": {
+            "type": "string",
+            "title": "Raw Source Id"
+          },
+          "quality_flags": {
+            "type": "string",
+            "title": "Quality Flags"
+          }
+        },
+        "type": "object",
+        "required": [
+          "latitude",
+          "longitude",
+          "timestamp_utc",
+          "sensor",
+          "source_dataset",
+          "satellite",
+          "instrument",
+          "version",
+          "confidence_native",
+          "confidence_type",
+          "frp",
+          "daynight",
+          "scan",
+          "track",
+          "cell_id",
+          "raw_source_id",
+          "quality_flags"
+        ],
+        "title": "Hotspot"
+      },
+      "HotspotResponse": {
+        "properties": {
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "records": {
+            "items": {
+              "$ref": "#/components/schemas/Hotspot"
+            },
+            "type": "array",
+            "title": "Records"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated"
+          }
+        },
+        "type": "object",
+        "required": [
+          "metadata",
+          "records",
+          "total",
+          "limit",
+          "offset",
+          "truncated"
+        ],
+        "title": "HotspotResponse"
+      },
+      "LoadRequest": {
+        "properties": {
+          "sources": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 1,
+            "title": "Sources"
+          },
+          "start": {
+            "type": "string",
+            "format": "date",
+            "title": "Start"
+          },
+          "end": {
+            "type": "string",
+            "format": "date",
+            "title": "End"
+          },
+          "bbox": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Bbox"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sources",
+          "start",
+          "end"
+        ],
+        "title": "LoadRequest"
+      },
+      "Metadata": {
+        "properties": {
+          "region": {
+            "type": "string",
+            "title": "Region"
+          },
+          "start": {
+            "type": "string",
+            "format": "date",
+            "title": "Start"
+          },
+          "end": {
+            "type": "string",
+            "format": "date",
+            "title": "End"
+          },
+          "sensor": {
+            "type": "string",
+            "title": "Sensor"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "confidence": {
+            "type": "string",
+            "title": "Confidence"
+          },
+          "metric": {
+            "type": "string",
+            "title": "Metric"
+          },
+          "method": {
+            "type": "string",
+            "title": "Method"
+          },
+          "processing_version": {
+            "type": "string",
+            "title": "Processing Version"
+          },
+          "attribution": {
+            "type": "string",
+            "title": "Attribution",
+            "default": "NASA FIRMS MODIS Collection 6.1 / VIIRS standard-processing observations"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          }
+        },
+        "type": "object",
+        "required": [
+          "region",
+          "start",
+          "end",
+          "sensor",
+          "source",
+          "confidence",
+          "metric",
+          "method",
+          "processing_version",
+          "warnings"
+        ],
+        "title": "Metadata"
+      },
+      "MethodologyResponse": {
+        "properties": {
+          "processing_version": {
+            "type": "string",
+            "title": "Processing Version"
+          },
+          "method": {
+            "type": "string",
+            "title": "Method"
+          },
+          "grid": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Grid"
+          },
+          "metrics": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metrics"
+          },
+          "confidence": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Confidence"
+          },
+          "harmonization": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Harmonization"
+          },
+          "baseline": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Baseline"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Limitations"
+          },
+          "sources": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "type": "object",
+        "required": [
+          "processing_version",
+          "method",
+          "grid",
+          "metrics",
+          "confidence",
+          "harmonization",
+          "baseline",
+          "limitations",
+          "sources"
+        ],
+        "title": "MethodologyResponse"
+      },
+      "QualityResponse": {
+        "properties": {
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "cleaning_report": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Cleaning Report"
+          },
+          "source_inventory": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Source Inventory"
+          },
+          "confidence_comparison": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Confidence Comparison"
+          },
+          "coverage": {
+            "items": {
+              "$ref": "#/components/schemas/Activity"
+            },
+            "type": "array",
+            "title": "Coverage"
+          }
+        },
+        "type": "object",
+        "required": [
+          "metadata",
+          "cleaning_report",
+          "source_inventory",
+          "confidence_comparison",
+          "coverage"
+        ],
+        "title": "QualityResponse"
+      },
+      "Region": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "bbox": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Bbox"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "bbox"
+        ],
+        "title": "Region"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

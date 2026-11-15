@@ -1,0 +1,132 @@
+{
+  "manifest_id": "PHASE2-2026-11-15-v1",
+  "status": "awaiting_explicit_manifest_approval",
+  "external_requests_made": 0,
+  "official_source_validation": "not_executed",
+  "mirror_validation": "not_executed",
+  "results": [],
+  "cases": [
+    {
+      "case_id": "NASA-01",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-02",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-03",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-04",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-05",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-06",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-07",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-08",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-09",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-10",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-11",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-12",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-13",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-14",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-15",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-16",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-17",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-18",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-19",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-20",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-21",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-22",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-23",
+      "status": "not_requested",
+      "verified": false
+    },
+    {
+      "case_id": "NASA-24",
+      "status": "not_requested",
+      "verified": false
+    }
+  ],
+  "measured_phase2_resources": null,
+  "scale_pilot_recommendation": "NO-GO pending approved acquisition and comparison evidence"
+}

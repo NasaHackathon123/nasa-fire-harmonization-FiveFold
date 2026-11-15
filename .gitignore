@@ -1,0 +1,57 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node.js
+node_modules/
+dist/
+
+# Large downloaded datasets
+data/raw/
+data/cleaned/
+data/processed/
+data/explorer/
+# Any additional private/local data directories and generated data artifacts.
+data/*/
+data/*.csv
+data/*.json
+data/*.parquet
+*.parquet
+
+# Local test runs, downloads, logs and Windows-generated files
+.tools/
+.pytest_cache/
+.vscode/
+Microsoft/
+project_dump.txt
+*.log
+*.tmp
+*.lock
+.download-*/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.tox/
+env/
+ENV/
+.aws/
+.ssh/
+*.pem
+*.key
+credentials.json
+service-account*.json
+NASA_GEMINI_HANDOFF.zip
+
+# Local databases
+*.duckdb
+*.duckdb.wal
+
+project_dump*.txt
