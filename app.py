@@ -5,6 +5,13 @@ import sys
 import streamlit as st
 import streamlit.components.v1 as components
 
+try:
+    for key, value in st.secrets.items():
+        if isinstance(value, str):
+            os.environ[key] = value
+except Exception:
+    pass
+
 # Ensure src/ is importable so `emberwatch` works without `pip install -e .`
 ROOT_DIR = Path(__file__).resolve().parent
 SRC_DIR = ROOT_DIR / "src"
